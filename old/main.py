@@ -55,15 +55,15 @@ while True:
             }
 
             r = requests.post(
-            url = 'https://content-vision.googleapis.com/v1/images:annotate',
-            headers = {
-                'x-origin': 'https://explorer.apis.google.com',
-            },
-            params = {
-                'alt': 'json',
-                'key': 'AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM',
-            },
-            json = jd
+                url = 'https://content-vision.googleapis.com/v1/images:annotate',
+                headers = {
+                    'x-origin': 'https://explorer.apis.google.com',
+                },
+                params = {
+                    'alt': 'json',
+                    'key': 'AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM',
+                },
+                json = jd
             )
 
             captcha_answer = r.json()['responses'][0]["textAnnotations"][0]["description"]
