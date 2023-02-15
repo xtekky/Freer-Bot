@@ -103,7 +103,7 @@ class Bot(Freer):
             "sec-fetch-mode"    : "cors",
             "sec-fetch-dest"    : "empty",
             "accept-language"   : "en-US,en;q=0.9",
-         }
+        }
         
     def solveCaptcha(self):
         captchaResp = self.reqSession.get("https://freer.es/captcha.php",
