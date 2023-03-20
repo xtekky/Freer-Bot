@@ -1,15 +1,13 @@
-const {CryptoJS, CryptoJSAesJson} = require('./crypto.js');
+const {CryptoJS, CryptoJSAesJson} = require('../crypto.js');
 
 const navigator = {
     userAgent: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36`
 }
 
 const localStorage = {
-
+    i: CryptoJS.MD5(navigator.userAgent).toString().substr(5, 10),
+    h: JSON.stringify({ v: '101' })
 }
-
-localStorage.i = CryptoJS.MD5(navigator.userAgent).toString().substr(5, 10);
-localStorage.h = JSON.stringify({ v: '101' });
 
 
 function zxndnnndje(e) {
