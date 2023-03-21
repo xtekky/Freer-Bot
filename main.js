@@ -1,8 +1,5 @@
 const { CryptoJS, CryptoJSAesJson } = require("./crypto.js");
-const { getDevice } = require("./device.v2.js");
-var axios = require("axios").default;
-
-
+const { getDevice }                 = require("./device.v2.js");
 
 const navigator = {
     userAgent: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36`,
@@ -30,7 +27,7 @@ const format_s = (e) => {
 }
 
 const decrypt_resp = (response) => {
-    json_resp   = JSON.parse(response);
+    json_resp   = response //JSON.parse(response);
     json_resp.s = format_s(json_resp.s);
 
     decoded = CryptoJS.AES.decrypt(JSON.stringify(json_resp), localStorage.i, {
@@ -54,7 +51,7 @@ const get_token = (payload) => {
 let options = {
     method: 'POST',
     headers: {
-        ...localStorage.h,
+        ...JSON.parse(localStorage.h),
         host: 'freer.es',
         connection: 'keep-alive',
         accept: '*/*',
@@ -72,8 +69,9 @@ let options = {
     }
 }
 
-console.log(options.headers);
-// fetch(`https://freer.es/v4.php?s=${get_token()}`, options)
-//     .then(res => res.json())
-//     .then(json => console.log(json))
-//     .catch(err => console.error('error:' + err));
+fetch(`https://freer.es/v4.php?s=${get_token()}`, options)
+    .then(res => res.json())
+    .then(json => {
+        console.log(decrypt_resp(json))
+    })
+    .catch(err => console.error('error:' + err));
