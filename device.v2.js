@@ -76,4 +76,4 @@ const Device = class {
     });
 };
 
-console.log(Device.getDevice());
+// console.log(Device.getDevice());

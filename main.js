@@ -1,5 +1,5 @@
 const { CryptoJS, CryptoJSAesJson } = require("./crypto.js");
-const { getDevice } = require("./device.js");
+const { getDevice } = require("./device.v2.js");
 
 const navigator = {
     userAgent: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36`,
@@ -10,7 +10,7 @@ const localStorage = {
     h: JSON.stringify({ v: "101" }),
 };
 
-function obb1(e) {
+const format_s = (e) => {
     let t = parseInt(e.substr(-7, 1) + e.substr(6, 1));
     e = e.substr(0, 6) + e.substr(7, e.length - 14) + e.substr(e.length - 6);
 
@@ -26,20 +26,25 @@ function obb1(e) {
     return a.join("");
 }
 
-function decrypt_resp(response) {
-    json_resp = JSON.parse(response);
-    json_resp.s = obb1(json_resp.s);
+const decrypt_resp = (response) => {
+    json_resp   = JSON.parse(response);
+    json_resp.s = format_s(json_resp.s);
 
     decoded = CryptoJS.AES.decrypt(JSON.stringify(json_resp), localStorage.i, {
-        format: CryptoJSAesJson,
-    }).toString(CryptoJS.enc.Utf8)
+        format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8)
 
-    parsed = JSON.parse(decoded)[0];
-
-    return atob(
-        parsed
-    );
+    return atob(JSON.parse(decoded)[0])
 }
 
+const get_token = (payload) => {
+    if (payload === void 0) return `ZA`
 
-console.log(getDevice)
+    return btoa(String.fromCharCode(CryptoJS.MD5(JSON.stringify(payload)).toString()
+        .match(/\d+/g)
+        .join('')
+        .split('')
+        .reduce((x, e) => parseInt(x) + parseInt(e), 0).toString()), 1)
+        .replace(/=+$/, '')
+}
+
+console.log(get_token());
