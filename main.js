@@ -1,5 +1,8 @@
 const { CryptoJS, CryptoJSAesJson } = require("./crypto.js");
 const { getDevice } = require("./device.v2.js");
+var axios = require("axios").default;
+
+
 
 const navigator = {
     userAgent: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36`,
@@ -47,4 +50,30 @@ const get_token = (payload) => {
         .replace(/=+$/, '')
 }
 
-console.log(get_token());
+
+let options = {
+    method: 'POST',
+    headers: {
+        ...localStorage.h,
+        host: 'freer.es',
+        connection: 'keep-alive',
+        accept: '*/*',
+        'sec-ch-ua': '"Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"',
+        'x-requested-with': 'XMLHttpRequest',
+        'sec-ch-ua-mobile': '?0',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+        'sec-ch-ua-platform': '"macOS"',
+        origin: 'https://freer.es',
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-dest': 'empty',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+    }
+}
+
+console.log(options.headers);
+// fetch(`https://freer.es/v4.php?s=${get_token()}`, options)
+//     .then(res => res.json())
+//     .then(json => console.log(json))
+//     .catch(err => console.error('error:' + err));
