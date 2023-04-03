@@ -12,7 +12,7 @@ const localStorage = {
 
 const format_s = (e) => {
     let t = parseInt(e.substr(-7, 1) + e.substr(6, 1));
-    e = e.substr(0, 6) + e.substr(7, e.length - 14) + e.substr(e.length - 6);
+    e     = e.substr(0, 6) + e.substr(7, e.length - 14) + e.substr(e.length - 6);
 
     var o = new RegExp("(.{" + e.length / t + "})", "g");
     let a = e.replace(o, "$1|").split("|");
